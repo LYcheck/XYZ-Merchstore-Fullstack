@@ -12,12 +12,14 @@ class ProdCondensed extends Component{
         this.removeProduct = this.removeProduct.bind(this);
     }
     
+    //remove prod from wishlist
     removeProduct = () =>{
         ds.removeFromWlist(this.props.product);
     }
     
     render(){
         return(
+            //stylize condensed card & implement button to remove from wishlist
             <li className="list-group-item pc-condensed">
                 <div className="row">
                     <a href="#" className="btn btn-outline-danger" onClick={() => this.removeProduct()}>X</a>

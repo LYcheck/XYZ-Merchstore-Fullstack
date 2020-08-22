@@ -1,6 +1,9 @@
+//dependencies
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+
+//db connection & error handle
 var db = mongoose.connect('mongodb://127.0.0.1/XYZstore').then(() => {
 console.log("Connected to Database");
 }).catch((err) => {
@@ -9,15 +12,18 @@ console.log("Connected to Database");
 
 const cors = require('cors');
 
+//schemas
 var Product = require('./model/product');
 var Wishlist = require('./model/wishlist');
 
+//init
 var app = express();
 app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+//post request, product containing title, price, hearts, imgurl
 app.post('/product', function(req, res){
     var product = new Product({title:req.body.title, price:req.body.price});
     product.save(function(err, savedProd){
@@ -30,6 +36,7 @@ app.post('/product', function(req, res){
     });
 });
 
+//get products
 app.get('/product', function(req, res){
     Product.find({}, function(err, products){
         if(err){
@@ -41,6 +48,7 @@ app.get('/product', function(req, res){
     });
 });
 
+//get populated wishlists
 app.get('/wishlist', function(req, res){
     Wishlist.find({}).populate({path:'products', model:'Product'}).exec(function(err, wishLists){
         if(err){
@@ -53,6 +61,7 @@ app.get('/wishlist', function(req, res){
 
 });
 
+//post wishlist
 app.post('/wishlist', function(req, res){
     var wishList = new Wishlist();
     wishList.title = req.body.title;
@@ -67,6 +76,7 @@ app.post('/wishlist', function(req, res){
     });
 });
 
+//put request to add product to wishlist
 app.put('/wishlist/product/add', function(req, res){
     Product.findOne({_id: req.body.productId}, function(err, product){
         if(err){
@@ -85,6 +95,7 @@ app.put('/wishlist/product/add', function(req, res){
     });
 });
 
+//port listener
 app.listen(3004, function() {
     console.log("XYZ Merch Store connected, port 3004");
 });

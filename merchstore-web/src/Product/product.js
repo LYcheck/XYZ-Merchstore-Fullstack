@@ -19,18 +19,22 @@ class Product extends Component{
         this.onWishlistChanged = this.onWishlistChanged.bind(this);
     }
     
+    //add to dom
     componentDidMount(){
         ns.addObserver(NOTIF_WISHLIST_CHANGED, this, this.onWishlistChanged);
     }
     
+    //remove from dom
     componentWillUnmount(){
         ns.removeObserver(this, NOTIF_WISHLIST_CHANGED);
     }
     
+    //on update, check state of product relative to wishlist
     onWishlistChanged(newWishList){
         this.setState({onWishList: ds.itemOnWlist(this.props.product)});
     }
     
+    //on button click event, remove/add to wishlist depending on state
     onButtonClicked = () =>{
         if(this.state.onWishList){
             ds.removeFromWlist(this.props.product);
@@ -48,6 +52,7 @@ class Product extends Component{
         else{ btnClass= "btn btn-primary"; }
         
         return(
+            //stylize product card and button function
             <div className="card product">
                 <img className = "card-img-top" src={this.props.product.imgUrl} alt="Product"></img>
                 <div className="card-block">

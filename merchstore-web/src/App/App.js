@@ -1,3 +1,4 @@
+//react & style
 import React from 'react';
 import { Component } from 'react';
 import './App.css';
@@ -10,8 +11,8 @@ import Wishlist from '../Wishlist/wishlist.js';
 import HttpService from '../Services/http-service.js';
 const http = new HttpService();
 
-class App extends Component {
 
+class App extends Component {
     constructor(props){
         super(props);
         
@@ -24,15 +25,15 @@ class App extends Component {
         this.loadData();
     }
     
+    //loads products from db into "products"
     loadData = () => {
         var self = this;
         http.getProds().then(data => {
             self.setState({products: data})
-        }, err => {
-            
-        });
+        }, err => {});
     }
     
+    //displays products via bootstrap styling
     prodList = () => {
         const list = this.state.products.map((product) => 
             <div className="col-sm-4" key={product._id}>
@@ -45,6 +46,7 @@ class App extends Component {
     render(){
   return (
     <div className="App">
+        //Wishlist and styling
           <div className="container-fluid App-main">
               <div className="row">
                     <div className="col-sm-8">

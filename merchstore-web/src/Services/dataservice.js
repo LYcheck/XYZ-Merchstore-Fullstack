@@ -6,6 +6,7 @@ let ns = new NotificationService();
 let instance = null;
 var wishList = [];
 
+//handles data flow
 class DataService{
     constructor(){
         if(!instance){
@@ -14,6 +15,7 @@ class DataService{
         return instance;
     }
     
+    //checks if product is on wishlist using linear search
     itemOnWlist = item =>{
         for(var x=0; x<wishList.length; x++){
             if(wishList[x]._id === item._id){
@@ -23,11 +25,13 @@ class DataService{
         return false;
     }
     
+    //adds a specific product to the wishlist (by id)
     addToWlist = item =>{
         wishList.push(item);
         ns.postNotification(NOTIF_WISHLIST_CHANGED, wishList);
     }
     
+    //removes a specific product to the wishlist (by id)
     removeFromWlist = item =>{
         for(var x=0; x<wishList.length; x++){
             if(wishList[x]._id === item._id){

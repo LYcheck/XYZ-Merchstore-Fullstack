@@ -3,6 +3,7 @@ export const NOTIF_WISHLIST_CHANGED = "notif_wishlist_changed";
 let observers = {};
 let instance = null;
 
+//service to handle changes to wishlist & product dataset
 class NotificationService{
     constructor(){
         if(!instance){
@@ -12,6 +13,7 @@ class NotificationService{
         return instance;
     }
     
+    //pushes a notification that data has changed
     postNotification = (notifName, data) =>{
         let obs = observers[notifName];
         for(var x=0; x<obs.length; x++){
@@ -20,6 +22,7 @@ class NotificationService{
         }
     }
     
+    //removes watcher
     removeObserver = (observer, notifName) =>{
         var obs = observers[notifName];
         
@@ -34,6 +37,7 @@ class NotificationService{
         }
     }
     
+    //adds watcher
     addObserver = (notifName, observer, callBack) =>{
         let obs = observers[notifName];
         

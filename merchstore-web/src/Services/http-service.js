@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 
+//handles port connection & "get"ing of product list from db
 class HttpService{
     getProds = () => {
         var promise = new Promise((resolve, reject) => {
